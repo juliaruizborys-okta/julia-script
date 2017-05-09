@@ -2,6 +2,7 @@ import React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import './main.css';
 
 export default class MainEditor extends React.Component {
     constructor(props) {
@@ -12,7 +13,9 @@ export default class MainEditor extends React.Component {
     }
     render() {
         return (
-            <Editor editorState={this.state.editorState} onEditorStateChange={this.onChange} />
+            <div className="editor-container">
+                <Editor editorState={this.state.editorState} onEditorStateChange={this.onChange} />
+            </div>
         );
     }
 }
