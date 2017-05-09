@@ -1,7 +1,8 @@
+import dedent from 'dedent-js';
+
 const getDropdownMarkup = (title, body) => {
 
-    // TODO there's gotta be a better way
-    const dropDownTemplate = 
+    const dropDownTemplate = dedent(
         `<MadCap:dropDown>
             <MadCap:dropDownHead>
                 <MadCap:dropDownHotspot>${title}</MadCap:dropDownHotspot>
@@ -9,7 +10,7 @@ const getDropdownMarkup = (title, body) => {
             <MadCap:dropDownBody>
                 ${body}
             </MadCap:dropDownBody>
-        </MadCap:dropDown>`
+        </MadCap:dropDown>`)
 
     return dropDownTemplate;
 }

@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "dedent-js": "^1.0.1",
     "draft-js": "^0.10.0",
+    "draft-js-export-html": "^0.5.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-draft-wysiwyg": "^1.9.8"

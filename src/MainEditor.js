@@ -2,7 +2,9 @@ import React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
 import './main.css';
+import getDropdownMarkup from "./getDropdownMarkup";
 
 //TODO refactor
 const toolbar = {
@@ -15,10 +17,15 @@ const toolbar = {
 export default class MainEditor extends React.Component {
     constructor(props) {
         super(props);
+        const titleOptions = ["title option 1", "title option dos"];
         this.state = {
             editorState: EditorState.createEmpty(),
-            titleOptions: ["test1", "test2"]
+            selectValue: titleOptions[0],
+            titleOptions: titleOptions,
+            titleText: "",
+            output: ""
         };
+
         this.onEditorStateChange = this.onEditorStateChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onTitleTextChange = this.onTitleTextChange.bind(this);
@@ -26,25 +33,45 @@ export default class MainEditor extends React.Component {
     }
 
     onEditorStateChange(editorState) {
-        this.setState({editorState});
+        this.setState({
+            editorState
+        }, () => {
+            this.makeOutput();
+        });
     }
 
-    onSelectChange() {
-
+    onSelectChange(event) {
+        this.setState({
+            selectValue: event.target.value
+        }, () => {
+            this.makeOutput();
+        });
     }
 
-    onTitleTextChange() {
+    onTitleTextChange(event) {
+        this.setState({
+            titleText: event.target.value
+        }, () => {
+            this.makeOutput();
+        });
+    }
 
+    makeOutput() {
+        const bodyText = "";
+        const nextOutput = getDropdownMarkup(this.state.titleText, bodyText);
+        this.setState({
+            output: nextOutput
+        });
     }
 
     onProcessButtonClick() {
-
+        this.makeOutput();
     }
 
     getSelect() {
         const selectOptions = this.state.titleOptions.map((title) => {
             return (
-                <option value={title}>{title}</option>
+                <option key={title} value={title}>{title}</option>
             );
         });
 
@@ -67,6 +94,9 @@ export default class MainEditor extends React.Component {
                     onEditorStateChange={this.onEditorStateChange} 
                 />
                 <button onClick={this.onProcessButtonClick}>Process!</button>
+                <hr/>
+                <h2>Output:</h2>
+                <pre className="output">{this.state.output}</pre>
             </div>
         );
     }
