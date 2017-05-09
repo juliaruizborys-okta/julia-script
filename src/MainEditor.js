@@ -18,7 +18,14 @@ const toolbar = {
 export default class MainEditor extends React.Component {
     constructor(props) {
         super(props);
-        const titleOptions = ["title option 1", "title option dos"];
+        const titleOptions = [
+            "Preview New Features (GA)",
+            "Preview Early Access",
+            "Bug Fixes",
+            "Application Integrations",
+            "Announcements",
+            "Mobile Releases"
+        ];
         this.state = {
             contentState: null,
             editorState: EditorState.createEmpty(),
