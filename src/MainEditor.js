@@ -102,8 +102,8 @@ export default class MainEditor extends React.Component {
         const editorState = this.state.editorState;
         return (
             <div className="editor-container">
-                <input type="text" value={this.state.titleText} onChange={this.onTitleTextChange} />
-                {this.getSelect()}
+                <div className="editor-input"><span className="editor-input-label">Content Options:</span> {this.getSelect()}</div>
+                <div className="editor-input"><span className="editor-input-label">Dropdown Title:</span> <input type="text" value={this.state.titleText} onChange={this.onTitleTextChange} /></div>
                 <Editor 
                     toolbar={toolbar}
                     editorState={editorState} 
