@@ -2,6 +2,7 @@ import React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import draftToHtml from 'draftjs-to-html';
 
 import './main.css';
 import getDropdownMarkup from "./getDropdownMarkup";
@@ -19,6 +20,7 @@ export default class MainEditor extends React.Component {
         super(props);
         const titleOptions = ["title option 1", "title option dos"];
         this.state = {
+            contentState: null,
             editorState: EditorState.createEmpty(),
             selectValue: titleOptions[0],
             titleOptions: titleOptions,
@@ -26,10 +28,17 @@ export default class MainEditor extends React.Component {
             output: ""
         };
 
+        this.onContentStateChange = this.onContentStateChange.bind(this);
         this.onEditorStateChange = this.onEditorStateChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onTitleTextChange = this.onTitleTextChange.bind(this);
         this.onProcessButtonClick = this.onProcessButtonClick.bind(this);
+    }
+
+    onContentStateChange(contentState) {
+        this.setState({
+            contentState
+        });
     }
 
     onEditorStateChange(editorState) {
@@ -57,7 +66,7 @@ export default class MainEditor extends React.Component {
     }
 
     makeOutput() {
-        const bodyText = "";
+        const bodyText = draftToHtml(this.state.contentState);
         const nextOutput = getDropdownMarkup(this.state.titleText, bodyText);
         this.setState({
             output: nextOutput
@@ -92,6 +101,7 @@ export default class MainEditor extends React.Component {
                     toolbar={toolbar}
                     editorState={editorState} 
                     onEditorStateChange={this.onEditorStateChange} 
+                    onContentStateChange={this.onContentStateChange} 
                 />
                 <button onClick={this.onProcessButtonClick}>Process!</button>
                 <hr/>
